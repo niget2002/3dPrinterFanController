@@ -19,7 +19,7 @@ int numDevices=0;
 float temps[2];
 float tempAve[2];
 
-int cold = 20;  // default heater on temperature
+int cold = 20;  // default fan on temperature
 float tDelta = 0.5; // delta for turning heater/chiller off
 
 int b=0;
@@ -79,10 +79,10 @@ void loop() {
 
 void setOutputs(void){
   if (digitalRead(TOGGLE) == 1){
-    cold=32;
+    cold=40;  // ABS Enclosure Temperature
   }
   else {
-    cold=20;
+    cold=20;  // PLA Enclosure Temperature
   }
   if ( cold < tempAve[air] ) {
     ledMatrix_ON(RELAY_OUTPUT);
