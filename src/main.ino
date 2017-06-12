@@ -1,6 +1,8 @@
 #include <Wire.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
 
 #define ONE_WIRE_BUS 10
 #define RELAY_OUTPUT 9
@@ -15,6 +17,8 @@ OneWire oneWire(ONE_WIRE_BUS);
 
 // Pass our oneWire reference to Dallas Temperature.
 DallasTemperature sensors(&oneWire);
+Adafruit_SSD1306 display(ONE_WIRE_BUS);
+
 int numDevices=0;
 float temps[2];
 float tempAve[2];
@@ -44,6 +48,17 @@ void setup() {
                   //Ups the delay giving the IC more time to process the temperature measurement
 
   Serial.println("Ready!");
+  // by default, we'll generate the high voltage from the 3.3v line internally! (neat!)
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // initialize with the I2C addr 0x3D (for the 128x64)
+  // init done
+
+  // Show image buffer on the display hardware.
+  // Since the buffer is intialized with an Adafruit splashscreen
+  // internally, this will display the splashscreen.
+  //display.display();
+
+  // Clear the buffer.
+  display.clearDisplay();
 }
 
 void loop() {
@@ -68,6 +83,24 @@ void loop() {
     Serial.println(tempAve[air]);
     Serial.print("Temp Set To=");
     Serial.println(cold);
+
+    //Update display
+    Serial.println("Printing to Display");
+    display.clearDisplay();
+    display.setTextSize(1);
+    display.setTextColor(WHITE);
+    display.setCursor(0,0);
+
+    display.print("Set Temp ");
+    display.println(cold);
+
+    display.setTextSize(1);
+    display.println("Temperature");
+    display.setTextSize(2);
+    display.print("     ");
+    display.println(tempAve[air]);
+    display.display();
+
 
     b=0;
   }
