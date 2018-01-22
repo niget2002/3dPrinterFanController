@@ -18,13 +18,13 @@ I've added a picture of my test board.
 
 Pins Used:
 
-SDA
-SDL
-5V
-GND
-D9 : Relay Output
-D10 : One wire bus (DS18B20)
-D11 : Switch input
+* SDA
+* SDL
+* 5V
+* GND
+* D9 : Relay Output
+* D10 : One wire bus (DS18B20)
+* D11 : Switch input
 
 I drive my switch with 5V.
 
